@@ -226,13 +226,9 @@ export default function Navbar() {
             >
               Support
             </Link>
-            <Link
-              href="/blog"
-              className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-sm"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
-            >
+            <div className="text-(--text-secondary) opacity-50 cursor-not-allowed font-medium tracking-widest uppercase text-sm">
               Blog
-            </Link>
+            </div>
             <Link
               href="/pricing"
               className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-sm"
@@ -294,13 +290,9 @@ export default function Navbar() {
             >
               Support
             </Link>
-            <Link
-              href="/blog"
-              className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-xs"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
-            >
+            <div className="text-(--text-secondary) opacity-50 cursor-not-allowed font-medium tracking-widest uppercase text-xs">
               Blog
-            </Link>
+            </div>
             <Link
               href="/pricing"
               className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-xs"

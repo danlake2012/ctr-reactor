@@ -368,7 +368,7 @@ export default function Home() {
               </div>
 
               {/* Tile 2 - Reactor */}
-              <Link href="/reactor">
+              <Link href="/tools/reactor">
                 <div className="group relative h-80 bg-linear-to-br from-blue-panel-2/95 to-blue-panel/95 border border-blue-primary/40 rounded-3xl overflow-hidden hover:border-blue-accent/70 transition-all duration-300 hover:shadow-[0_0_45px_var(--blue-glow-25)] cursor-pointer backdrop-blur-md">
                   <div className="absolute inset-0 bg-linear-to-br from-blue-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -422,8 +422,7 @@ export default function Home() {
               </Link>
 
               {/* Tile 3 - Settings */}
-              <Link href="/settings">
-                <div className="group relative h-80 bg-black/95 border border-gray-800/60 rounded-3xl hover:border-gray-600/70 transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,0,0,0.5)] cursor-pointer backdrop-blur-md">
+              <div className="group relative h-80 bg-black/95 border border-gray-800/60 rounded-3xl hover:border-gray-600/70 transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,0,0,0.5)] cursor-not-allowed backdrop-blur-md opacity-60">
                   <div className="absolute inset-0 bg-linear-to-br from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="relative h-full flex flex-col items-center justify-between p-6 text-center">
@@ -503,7 +502,6 @@ export default function Home() {
                     </h3>
                   </div>
                 </div>
-              </Link>
             </div>
           </div>
         </main>
