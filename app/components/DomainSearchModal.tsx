@@ -293,7 +293,10 @@ export default function DomainSearchModal({ isOpen, onClose }: DomainSearchModal
                         )}
 
                         {result.available && (
-                          <button className="opacity-0 group-hover:opacity-100 transition-all duration-200 bg-linear-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105">
+                          <button 
+                            onClick={() => window.open(`https://www.name.com/domain/search/${result.domain}`, '_blank')}
+                            className="opacity-0 group-hover:opacity-100 transition-all duration-200 bg-linear-to-r from-blue-500 to-purple-500 hover:from-blue-400 hover:to-purple-400 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+                          >
                             Register
                             <ExternalLink className="w-4 h-4" />
                           </button>
