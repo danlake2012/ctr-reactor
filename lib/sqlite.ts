@@ -7,16 +7,17 @@ import crypto from 'crypto';
 // example Vercel's build image or CI) won't fail during the Next.js build.
 // If the module isn't available, we export stub functions that throw helpful
 // errors so callers can fall back to other providers (Supabase) in production.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let Database: any = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let bcrypt: any = null;
 try {
   // Use runtime require so the bundler doesn't try to resolve the native module
   // at build/compile time.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const req: any = require;
+  const req = require;
   Database = req('better-sqlite3');
   bcrypt = req('bcryptjs');
-} catch (_) {
+} catch {
   // Not fatal during build; warn so developers know SQLite features are disabled.
   console.warn('better-sqlite3 or bcryptjs not available — SQLite features disabled in this environment.');
 }
@@ -33,14 +34,23 @@ if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 const SQLITE_UNAVAILABLE_ERROR = new Error('SQLite (better-sqlite3) is not available in this environment. Use Supabase/Postgres in production or install better-sqlite3 locally.');
 
 // Implementation placeholders — we'll assign real implementations when Database is available
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let createUserImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let findUserByEmailImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let verifyPasswordImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let createSessionImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let findSessionImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let deleteSessionImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let getUserByIdImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let setResetTokenImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let consumeResetTokenImpl: any = () => { throw SQLITE_UNAVAILABLE_ERROR; };
 
 if (Database) {
@@ -146,13 +156,22 @@ CREATE TABLE IF NOT EXISTS sessions (
   };
 }
 
-// Exported functions that forward to implementations (either real or stub)
+// Export functions that delegate to implementations
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createUser = (...args: any[]) => createUserImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const findUserByEmail = (...args: any[]) => findUserByEmailImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const verifyPassword = (...args: any[]) => verifyPasswordImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createSession = (...args: any[]) => createSessionImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const findSession = (...args: any[]) => findSessionImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const deleteSession = (...args: any[]) => deleteSessionImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getUserById = (...args: any[]) => getUserByIdImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const setResetToken = (...args: any[]) => setResetTokenImpl(...args);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const consumeResetToken = (...args: any[]) => consumeResetTokenImpl(...args);

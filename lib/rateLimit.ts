@@ -4,11 +4,9 @@
 type Entry = { count: number; resetAt: number };
 
 const WINDOW = 60 * 1000; // default 1 minute
-const storeKey = '__CTR_REACTOR_RATE_LIMIT_STORE__';
 
 declare global {
   // attach to globalThis so state survives module reloads in dev
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   var __CTR_REACTOR_RATE_LIMIT_STORE__: Map<string, Entry> | undefined;
 }
 

@@ -48,4 +48,3 @@ jobs:
           echo "Pinging deploy URL: ${{ secrets.DEPLOY_URL }}"
           # Fail if not 2xx
           curl -sSf "${{ secrets.DEPLOY_URL }}" -o /dev/null
-*** End Patch
