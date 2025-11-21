@@ -1,0 +1,8 @@
+# robots.txt — disallow all crawlers until the site is ready for indexing
+# Generated on 2025-11-21
+User-agent: *
+Disallow: /
+
+# If/when you're ready to allow indexing, replace with:
+# User-agent: *
+# Disallow:
