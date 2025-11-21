@@ -1,4 +1,7 @@
-# robots.txt — disallow all crawlers until the site is ready for indexing
+User-agent: *
+Disallow: /
+
+# Site is private while in preview/development.# robots.txt — disallow all crawlers until the site is ready for indexing
 # Generated on 2025-11-21
 User-agent: *
 Disallow: /

@@ -2,14 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { EMOJI_AVATARS, pickEmojiForKey } from '@/lib/emojiAvatars';
 
-const avatars = [
-  '👤', '👨', '👩', '🧑', '👨‍💻', '👩‍💻', '🧑‍💻', '👨‍🎨', '👩‍🎨',
-  '🧑‍🎨', '👨‍🔬', '👩‍🔬', '🧑‍🔬', '👨‍🚀', '👩‍🚀', '🧑‍🚀'
-];
-
-export default function AvatarDropdown({ modalOpen = false }: { modalOpen?: boolean }) {
-  const [selectedAvatar, setSelectedAvatar] = useState('👤');
+export default function AvatarDropdown({ modalOpen = false, seed }: { modalOpen?: boolean; seed?: string }) {
+  const [selectedAvatar, setSelectedAvatar] = useState(() => pickEmojiForKey(seed || ''));
   const [isOpen, setIsOpen] = useState(false);
 
   // If a modal (like the login modal) opens elsewhere, ensure the avatar dropdown closes
@@ -45,13 +41,13 @@ export default function AvatarDropdown({ modalOpen = false }: { modalOpen?: bool
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black"
+            className="fixed inset-0 bg-black/60"
             style={{ zIndex: 9999 }}
             onClick={() => setIsOpen(false)}
           />
 
           {/* Menu */}
-          <div className="fixed right-8 top-20 w-64 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl py-3" style={{ zIndex: 9999 }}>
+          <div className="fixed right-8 top-20 w-64 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl py-3" style={{ zIndex: 10000 }}>
             <div className="px-4 py-2 border-b border-blue-primary/20">
               <h3 className="text-sm font-medium text-blue-accent uppercase tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Choose Avatar
@@ -59,7 +55,7 @@ export default function AvatarDropdown({ modalOpen = false }: { modalOpen?: bool
             </div>
 
             <div className="grid grid-cols-4 gap-2 p-3">
-              {avatars.map((avatar) => (
+              {EMOJI_AVATARS.map((avatar) => (
                 <button
                   key={avatar}
                   onClick={() => {

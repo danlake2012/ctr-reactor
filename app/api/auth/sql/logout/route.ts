@@ -14,8 +14,12 @@ export async function POST(req: Request) {
 
     const secureFlag = process.env.NODE_ENV === 'production' ? '; Secure' : '';
     const clear = `${COOKIE_NAME}=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax${secureFlag}`;
+    const clearAdmin = `is_admin=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax${secureFlag}`;
 
-    return NextResponse.json({ ok: true }, { status: 200, headers: { 'Set-Cookie': clear } });
+    const res = NextResponse.json({ ok: true }, { status: 200 });
+    res.headers.append('Set-Cookie', clear);
+    res.headers.append('Set-Cookie', clearAdmin);
+    return res;
   } catch (err) {
     console.error('Logout error', err);
     return NextResponse.json({ ok: false, message: 'Server error' }, { status: 500 });

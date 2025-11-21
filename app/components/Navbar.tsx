@@ -10,6 +10,7 @@ import { supabase, hasSupabase } from '../../lib/supabaseClient';
 import { useUserStore } from '../store/useUserStore';
 
 type ModalType = 'none' | 'login' | 'signup' | 'forgot';
+type User = { id?: string; email?: string; name?: string; avatar_url?: string; };
 
 export default function Navbar() {
   const [modalType, setModalType] = useState<ModalType>('none');
@@ -239,13 +240,6 @@ export default function Navbar() {
             >
               Pricing
             </Link>
-            <Link
-              href="/admin"
-              className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-sm"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
-            >
-              Admin
-            </Link>
           </div>
 
           {/* Auth Buttons & Avatar */}
@@ -253,7 +247,7 @@ export default function Navbar() {
             <AvatarDropdown modalOpen={isAnyModalOpen} />
             {user ? (
               <>
-                <span className="text-sm text-slate-200 mr-2">{(user as any)?.email || 'Logged in'}</span>
+                <span className="text-sm text-slate-200 mr-2">{(user as User)?.email || 'Logged in'}</span>
                 <button
                   onClick={async () => {
                     try {
@@ -313,13 +307,6 @@ export default function Navbar() {
               style={{ fontFamily: 'Orbitron, sans-serif' }}
             >
               Pricing
-            </Link>
-            <Link
-              href="/admin"
-              className="text-(--text-secondary) hover:text-blue-accent transition-colors duration-200 font-medium tracking-widest uppercase text-xs"
-              style={{ fontFamily: 'Orbitron, sans-serif' }}
-            >
-              Admin
             </Link>
             <AvatarDropdown modalOpen={isAnyModalOpen} />
             <button
