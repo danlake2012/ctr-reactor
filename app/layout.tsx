@@ -15,10 +15,7 @@ export const metadata: Metadata = {
   title: "The CTR-Reactor | Ad Performance Analyzer",
   description: "Advanced AI-powered ad performance analysis system",
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
-    ],
+    icon: '/favicon.ico',
     shortcut: '/favicon.ico',
   },
 };
