@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { findUserByEmail, verifyPassword, createSession } from '../../../../lib/sqlite';
-import { isRateLimited } from '../../../../lib/rateLimit';
+import { findUserByEmail, verifyPassword, createSession } from '../../../../../lib/sqlite';
+import { isRateLimited } from '../../../../../lib/rateLimit';
 
 const COOKIE_NAME = process.env.SESSION_COOKIE_NAME || 'session';
 const MAX_AGE = parseInt(process.env.SESSION_MAX_AGE || '604800', 10); // default 7 days

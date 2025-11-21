@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findSession, getUserById } from '../../../../lib/sqlite';
+import { findSession, getUserById } from '../../../../../lib/sqlite';
 
 const COOKIE_NAME = process.env.SESSION_COOKIE_NAME || 'session';
 

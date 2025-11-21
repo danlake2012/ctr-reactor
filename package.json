@@ -17,7 +17,10 @@
     "nodemailer": "^7.0.10",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.8",
+    
+    "bcryptjs": "^2.4.3",
+    "@supabase/supabase-js": "^2.30.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -29,5 +32,9 @@
     "eslint-config-next": "16.0.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  }
+  ,
+  "optionalDependencies": {
+    "better-sqlite3": "^8.1.0"
   }
 }

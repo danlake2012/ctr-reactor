@@ -60,7 +60,7 @@ export default function Navbar() {
     }
 
     // Prefer Supabase auth when configured
-    if (hasSupabase) {
+    if (hasSupabase && supabase) {
       const supResp = await supabase.auth.signInWithPassword({ email, password });
       const supTyped = supResp as unknown as { error?: { message?: string }; user?: { id?: string; email?: string } };
       if (supTyped.error) {
@@ -118,7 +118,7 @@ export default function Navbar() {
       }
     }
 
-    if (hasSupabase) {
+    if (hasSupabase && supabase) {
       const supResp = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
       const supTyped = supResp as unknown as { error?: { message?: string }; user?: { email?: string } };
       if (supTyped.error) {
@@ -172,7 +172,7 @@ export default function Navbar() {
       }
     }
 
-    if (hasSupabase) {
+    if (hasSupabase && supabase) {
       const supResp = await supabase.auth.resetPasswordForEmail(email);
       const supTyped = supResp as unknown as { error?: { message?: string } };
       if (supTyped.error) {

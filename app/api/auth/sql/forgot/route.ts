@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { findUserByEmail, setResetToken } from '../../../../lib/sqlite';
+import { findUserByEmail, setResetToken } from '../../../../../lib/sqlite';
 import crypto from 'crypto';
 
 export async function POST(req: Request) {
