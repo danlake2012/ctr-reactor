@@ -1,0 +1,95 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
+interface WelcomeMessageProps {
+  user: { email?: string; id?: string } | null;
+  onClose: () => void;
+}
+
+export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
+  const [location, setLocation] = useState<string>('your location');
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    // Get user's location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          if (!mounted) return;
+
+          try {
+            const { latitude, longitude } = position.coords;
+            // Use a reverse geocoding service to get location name
+            const response = await fetch(
+              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+            );
+            const data = await response.json();
+            const city = data.city || data.locality || 'your location';
+            const country = data.countryName || '';
+            if (mounted) {
+              setLocation(`${city}${country ? `, ${country}` : ''}`);
+            }
+          } catch (error) {
+            console.error('Failed to get location:', error);
+            // Location already defaults to 'your location'
+          }
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          // Location already defaults to 'your location'
+        }
+      );
+    }
+
+    // Auto-hide after 5 seconds
+    const timer = setTimeout(() => {
+      if (mounted) {
+        setShow(false);
+        onClose();
+      }
+    }, 5000);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+    };
+  }, [onClose]);
+
+  if (!show) return null;
+
+  return (
+    <div className="fixed top-20 right-4 z-50 animate-in slide-in-from-right-4 fade-in-0 duration-500">
+      <div className="bg-linear-to-r from-blue-600/95 to-purple-600/95 border border-blue-400/30 rounded-xl p-4 shadow-2xl backdrop-blur-md max-w-sm">
+        <div className="flex items-start gap-3">
+          <div className="text-2xl">👋</div>
+          <div className="flex-1">
+            <h3 className="text-white font-bold text-lg mb-1" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+              Welcome back!
+            </h3>
+            <p className="text-blue-100 text-sm mb-2">
+              You&apos;re logging in from {location}
+            </p>
+            <p className="text-blue-200 text-xs">
+              Hello, {user?.email || 'User'}!
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              setShow(false);
+              onClose();
+            }}
+            className="text-blue-200 hover:text-white transition-colors text-xl leading-none"
+          >
+            ×
+          </button>
+        </div>
+        <div className="mt-3 bg-blue-500/20 rounded-full h-1">
+          <div className="bg-blue-400 h-1 rounded-full animate-pulse" style={{ width: '100%', animation: 'shrink 5s linear forwards' }}></div>
+        </div>
+      </div>
+    </div>
+  );
+}

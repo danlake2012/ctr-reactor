@@ -6,6 +6,7 @@ import LoginModal from './LoginModal';
 import AvatarDropdown from './AvatarDropdown';
 import SignUpModal from './SignUpModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
+import WelcomeMessage from './WelcomeMessage';
 import { supabase, hasSupabase } from '../../lib/supabaseClient';
 import { useUserStore } from '../store/useUserStore';
 
@@ -14,6 +15,7 @@ type User = { id?: string; email?: string; name?: string; avatar_url?: string; }
 
 export default function Navbar() {
   const [modalType, setModalType] = useState<ModalType>('none');
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const openModal = (t: ModalType) => setModalType(t);
   const closeModal = () => setModalType('none');
@@ -53,6 +55,7 @@ export default function Navbar() {
         const data = await res.json();
         useUserStore.getState().setUser({ email: data.email });
         closeModal();
+        setShowWelcome(true);
         return;
       } catch (err) {
         console.error('SQLite login failed', err);
@@ -71,6 +74,7 @@ export default function Navbar() {
       const user = supTyped.user;
       useUserStore.getState().setUser({ id: user?.id, email: user?.email });
       closeModal();
+      setShowWelcome(true);
       return;
     }
 
@@ -91,6 +95,7 @@ export default function Navbar() {
       console.log('Login success', data);
       useUserStore.getState().setUser({ email: data.email });
       closeModal();
+      setShowWelcome(true);
     } catch (err) {
       console.error('Login failed', err);
       throw err;
@@ -338,6 +343,14 @@ export default function Navbar() {
         onClose={closeModal}
         onSubmit={handleForgot}
       />
+
+      {/* Welcome Message */}
+      {showWelcome && user && (
+        <WelcomeMessage
+          user={user}
+          onClose={() => setShowWelcome(false)}
+        />
+      )}
     </nav>
   );
 }
