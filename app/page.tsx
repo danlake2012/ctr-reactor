@@ -519,7 +519,7 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center">
-              <div className="bg-linear-to-br from-blue-panel-2/95 to-blue-panel/95 border border-blue-primary/40 rounded-3xl p-8 shadow-[0_0_25px_var(--blue-glow-25)] backdrop-blur-md max-w-md w-full">
+              <div className="bg-linear-to-br from-blue-panel-2/95 to-blue-panel/95 border border-blue-primary/40 rounded-3xl p-8 shadow-[0_0_25px_var(--blue-glow-25)] backdrop-blur-md max-w-md w-full animate-float hover:shadow-[0_0_40px_var(--blue-glow-50)] transition-all duration-500 hover:scale-105">
                 <div className="text-center">
                   <div className="text-6xl mb-6">🌐</div>
                   <h3 className="text-2xl font-bold text-blue-accent mb-4" style={{ fontFamily: 'Orbitron, sans-serif' }}>
@@ -530,7 +530,7 @@ export default function Home() {
                   </p>
                   <button
                     onClick={() => setIsDomainModalOpen(true)}
-                    className="w-full bg-white hover:bg-gray-100 text-black font-bold py-3 px-6 rounded-lg transition-colors tracking-[0.2em] uppercase text-sm shadow-[0_0_24px_var(--blue-glow-35)]"
+                    className="w-full bg-white hover:bg-gray-100 text-black font-bold py-3 px-6 rounded-lg transition-colors tracking-[0.2em] uppercase text-sm shadow-[0_0_24px_var(--blue-glow-35)] hover:shadow-[0_0_32px_var(--blue-glow-50)]"
                     style={{ fontFamily: 'Orbitron, sans-serif' }}
                   >
                     SEARCH DOMAINS
