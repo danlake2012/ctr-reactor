@@ -530,7 +530,7 @@ export default function Home() {
                   </p>
                   <button
                     onClick={() => setIsDomainModalOpen(true)}
-                    className="w-full bg-blue-accent hover:bg-blue-bright text-black font-bold py-3 px-6 rounded-lg transition-colors tracking-[0.2em] uppercase text-sm shadow-[0_0_24px_var(--blue-glow-35)]"
+                    className="w-full bg-white hover:bg-gray-100 text-black font-bold py-3 px-6 rounded-lg transition-colors tracking-[0.2em] uppercase text-sm shadow-[0_0_24px_var(--blue-glow-35)]"
                     style={{ fontFamily: 'Orbitron, sans-serif' }}
                   >
                     SEARCH DOMAINS
