@@ -22,6 +22,8 @@ export default function Navbar() {
   const useSqlite = process.env.NEXT_PUBLIC_USE_SQLITE === 'true';
   const user = useUserStore((s) => s.user);
 
+  console.log('Navbar: useSqlite =', useSqlite, 'hasSupabase =', hasSupabase, 'supabase =', !!supabase);
+
   useEffect(() => {
     // hydrate user from server session when using SQLite sessions
     if (useSqlite) {
@@ -58,8 +60,11 @@ export default function Navbar() {
   }, [useSqlite]);
 
   const handleLogin = async (email: string, password: string) => {
+    console.log('handleLogin called with useSqlite =', useSqlite, 'hasSupabase =', hasSupabase);
+
     // If client requests SQLite auth, call the server-side SQLite endpoints
     if (useSqlite) {
+      console.log('Using SQLite authentication');
       try {
         const res = await fetch('/api/auth/sql/login', {
           method: 'POST',
@@ -83,17 +88,36 @@ export default function Navbar() {
 
     // Prefer Supabase auth when configured
     if (hasSupabase && supabase) {
-      const supResp = await supabase.auth.signInWithPassword({ email, password });
-      const supTyped = supResp as unknown as { error?: { message?: string }; user?: { id?: string; email?: string } };
-      if (supTyped.error) {
-        console.error('Supabase login error', supTyped.error);
-        throw new Error(supTyped.error.message || 'Login failed');
+      console.log('Using Supabase authentication');
+      try {
+        console.log('Attempting Supabase login with:', { email });
+        const supResp = await supabase.auth.signInWithPassword({ email, password });
+        console.log('Supabase login response:', supResp);
+
+        if (supResp.error) {
+          console.error('Supabase login error:', supResp.error);
+
+          // Handle specific error cases
+          if (supResp.error.message?.includes('Email not confirmed')) {
+            throw new Error(`Please check your email (${email}) and click the confirmation link before logging in.`);
+          }
+          if (supResp.error.message?.includes('Invalid login credentials')) {
+            throw new Error('Invalid email or password. Please check your credentials.');
+          }
+
+          throw new Error(supResp.error.message || 'Login failed');
+        }
+
+        const user = supResp.data.user;
+        console.log('Supabase login successful for user:', user?.email);
+        useUserStore.getState().setUser({ id: user?.id, email: user?.email });
+        closeModal();
+        setShowWelcome(true);
+        return;
+      } catch (err) {
+        console.error('Supabase login failed:', err);
+        throw err;
       }
-      const user = supTyped.user;
-      useUserStore.getState().setUser({ id: user?.id, email: user?.email });
-      closeModal();
-      setShowWelcome(true);
-      return;
     }
 
     // Fallback to demo API route
@@ -111,7 +135,7 @@ export default function Navbar() {
 
       const data = await res.json();
       console.log('Login success', data);
-      useUserStore.getState().setUser({ email: data.email });
+      useUserStore.getState().setUser({ email: data.user.email });
       closeModal();
       setShowWelcome(true);
     } catch (err) {
@@ -121,7 +145,10 @@ export default function Navbar() {
   };
 
   const handleSignup = async (name: string, email: string, password: string) => {
+    console.log('handleSignup called with useSqlite =', useSqlite, 'hasSupabase =', hasSupabase);
+
     if (useSqlite) {
+      console.log('Using SQLite signup');
       try {
         const res = await fetch('/api/auth/sql/signup', {
           method: 'POST',
@@ -144,17 +171,45 @@ export default function Navbar() {
     }
 
     if (hasSupabase && supabase) {
-      const supResp = await supabase.auth.signUp({ email, password, options: { data: { full_name: name } } });
-      const supTyped = supResp as unknown as { error?: { message?: string }; user?: { email?: string } };
-      if (supTyped.error) {
-        console.error('Supabase signup error', supTyped.error);
-        throw new Error(supTyped.error.message || 'Signup failed');
+      console.log('Using Supabase signup');
+      try {
+        console.log('Attempting Supabase signup with:', { email, password, name });
+        const supResp = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: name },
+            emailRedirectTo: `${window.location.origin}/auth/callback`
+          }
+        });
+
+        console.log('Supabase signup response:', supResp);
+
+        if (supResp.error) {
+          console.error('Supabase signup error:', supResp.error);
+          throw new Error(supResp.error.message || 'Signup failed');
+        }
+
+        const user = supResp.data.user;
+        console.log('Supabase user created:', user);
+
+        if (user && !user.email_confirmed_at) {
+          // Email confirmation required
+          console.log('Email confirmation required for user:', user.email);
+          alert(`Account created! Please check your email (${email}) and click the confirmation link to activate your account.`);
+          closeModal();
+          return;
+        }
+
+        // If email is already confirmed (shouldn't happen with Supabase default settings)
+        useUserStore.getState().setUser({ email: user?.email });
+        closeModal();
+        setShowWelcome(true);
+        return;
+      } catch (err) {
+        console.error('Supabase signup failed:', err);
+        throw err;
       }
-      const user = supTyped.user;
-      useUserStore.getState().setUser({ email: user?.email });
-      closeModal();
-      setShowWelcome(true);
-      return;
     }
 
     try {
