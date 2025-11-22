@@ -42,13 +42,13 @@ export default function AvatarDropdown({ modalOpen = false, seed }: { modalOpen?
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/60"
-            style={{ zIndex: 9999 }}
+            className="fixed inset-0 bg-black/80"
+            style={{ zIndex: 99999 }}
             onClick={() => setIsOpen(false)}
           />
 
           {/* Menu */}
-          <div className="fixed right-8 top-20 w-80 h-80 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl overflow-hidden" style={{ zIndex: 10000 }}>
+          <div className="fixed right-8 top-20 w-80 h-80 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl overflow-hidden" style={{ zIndex: 100000 }}>
             {/* Header with User Dashboard Link */}
             <div className="px-4 py-3 border-b border-blue-primary/20">
               <Link
