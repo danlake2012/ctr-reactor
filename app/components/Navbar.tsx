@@ -24,19 +24,37 @@ export default function Navbar() {
 
   useEffect(() => {
     // hydrate user from server session when using SQLite sessions
-    if (!useSqlite) return;
-    (async () => {
-      try {
-        const res = await fetch('/api/auth/sql/me');
-        if (!res.ok) return;
-        const data = await res.json().catch(() => ({}));
-        if (data?.ok && data.user) {
-          useUserStore.getState().setUser({ id: data.user.id, email: data.user.email });
+    if (useSqlite) {
+      (async () => {
+        try {
+          const res = await fetch('/api/auth/sql/me');
+          if (!res.ok) return;
+          const data = await res.json().catch(() => ({}));
+          if (data?.ok && data.user) {
+            useUserStore.getState().setUser({ id: data.user.id, email: data.user.email });
+          }
+        } catch (err) {
+          console.error('Failed to hydrate user', err);
         }
-      } catch (err) {
-        console.error('Failed to hydrate user', err);
-      }
-    })();
+      })();
+    }
+
+    // hydrate user from Supabase session
+    if (hasSupabase && supabase && !useSqlite) {
+      (async () => {
+        try {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            useUserStore.getState().setUser({
+              id: session.user.id,
+              email: session.user.email
+            });
+          }
+        } catch (err) {
+          console.error('Failed to hydrate Supabase user', err);
+        }
+      })();
+    }
   }, [useSqlite]);
 
   const handleLogin = async (email: string, password: string) => {
@@ -117,6 +135,7 @@ export default function Navbar() {
         const data = await res.json();
         useUserStore.getState().setUser({ email: data.user?.email });
         closeModal();
+        setShowWelcome(true);
         return;
       } catch (err) {
         console.error('SQLite signup failed', err);
@@ -134,6 +153,7 @@ export default function Navbar() {
       const user = supTyped.user;
       useUserStore.getState().setUser({ email: user?.email });
       closeModal();
+      setShowWelcome(true);
       return;
     }
 
@@ -149,8 +169,10 @@ export default function Navbar() {
       }
       const data = await res.json();
       console.log('Signup success', data);
+      useUserStore.getState().setUser({ email: data.email || email });
       alert('Account created (demo) — you can now log in');
       closeModal();
+      setShowWelcome(true);
     } catch (err) {
       console.error(err);
       throw err;
@@ -252,7 +274,12 @@ export default function Navbar() {
                 <button
                   onClick={async () => {
                     try {
-                      await fetch('/api/auth/sql/logout', { method: 'POST' });
+                      if (useSqlite) {
+                        await fetch('/api/auth/sql/logout', { method: 'POST' });
+                      }
+                      if (hasSupabase && supabase) {
+                        await supabase.auth.signOut();
+                      }
                     } catch (err) {
                       console.error('Logout failed', err);
                     }
