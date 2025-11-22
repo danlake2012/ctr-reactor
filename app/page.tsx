@@ -1041,7 +1041,7 @@ export default function Home() {
 
         {/* Reactor Charging Section */}
         {isAnalyzing && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="modal-backdrop fixed inset-0 backdrop-blur-sm z-50 flex items-center justify-center">
             <div className="bg-black/90 border-2 border-(--blue-primary) rounded-xl p-8 shadow-[0_0_40px_var(--blue-glow)] max-w-md w-full mx-4">
               <h3 className="text-2xl font-bold text-(--blue-primary) text-center mb-8" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 REACTOR CHARGING

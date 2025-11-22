@@ -377,7 +377,7 @@ export default function UserDashboard() {
 
       {/* Password Reset Modal */}
       {showPasswordModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
@@ -432,7 +432,7 @@ export default function UserDashboard() {
 
       {/* Profile Update Modal */}
       {showProfileModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
@@ -506,7 +506,7 @@ export default function UserDashboard() {
 
       {/* Notifications Modal */}
       {showNotificationsModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
@@ -538,7 +538,7 @@ export default function UserDashboard() {
 
       {/* Delete Account Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-red-400" style={{ fontFamily: 'Orbitron, sans-serif' }}>

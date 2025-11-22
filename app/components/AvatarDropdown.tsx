@@ -42,7 +42,7 @@ export default function AvatarDropdown({ modalOpen = false, seed }: { modalOpen?
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/95"
+            className="modal-backdrop fixed inset-0"
             style={{ zIndex: 9999999 }}
             onClick={() => setIsOpen(false)}
           />

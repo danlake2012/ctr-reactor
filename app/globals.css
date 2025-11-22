@@ -39,6 +39,7 @@
   --grid-line-10: rgba(24, 182, 255, 0.10);
   --foreground-rgba-18: rgba(14, 165, 233, 0.18);
   --blue-accent-12: rgba(37, 99, 235, 0.12);
+  --modal-backdrop-opacity: 0.9;
 }
 
 /* Theme overrides */
@@ -329,4 +330,9 @@ body {
   100% {
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateY(0px) translateZ(20px);
   }
+}
+
+/* Modal and Dropdown Utilities */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, var(--modal-backdrop-opacity));
 }
