@@ -58,7 +58,7 @@ function AuthCallbackContent() {
           }, 2000);
         } else {
           // Try query parameters as fallback
-          const code = searchParams.get('code');
+          const code = searchParams?.get('code');
 
           if (code) {
             const { error: sessionError } = await supabase.auth.exchangeCodeForSession(code);
