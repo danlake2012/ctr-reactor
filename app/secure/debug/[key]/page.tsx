@@ -13,6 +13,7 @@ export default async function SecureDebugPage({ params }: PageProps) {
   const isDev = (process.env.NODE_ENV || '').toLowerCase() === 'development';
 
   const keyParam = String(params?.key || '').trim();
+  console.debug('[secure debug] params.key=', params?.key, 'keyParam=', keyParam, 'allowed=', allowed.join(','), 'isDev=', isDev);
   if (!isDev && !allowed.includes(keyParam)) {
     console.warn(`[secure debug] Provided key did not match any allowed secrets`);
     notFound();
