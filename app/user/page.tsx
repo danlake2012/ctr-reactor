@@ -25,7 +25,7 @@ export default function UserDashboard() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState(''); // for future use
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -275,6 +275,19 @@ export default function UserDashboard() {
                 <p className="text-white">
                   {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'N/A'}
                 </p>
+              </div>
+              <div className="mt-3">
+                <button
+                  onClick={() => {
+                    // Open the profile modal and then open the file picker after it mounts
+                    setShowProfileModal(true);
+                    setTimeout(() => fileInputRef.current?.click(), 150);
+                  }}
+                  className="inline-flex items-center gap-2 border border-blue-primary/30 bg-blue-primary/10 hover:bg-blue-primary/20 text-blue-accent px-3 py-2 rounded-full text-sm transition-colors"
+                >
+                  <Upload size={14} />
+                  Change Profile Picture
+                </button>
               </div>
             </div>
           </div>
