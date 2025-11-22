@@ -14,35 +14,67 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
   useEffect(() => {
     let mounted = true;
 
-    // Get user's location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          if (!mounted) return;
+    // Get user's location with better error handling
+    const getLocation = async () => {
+      if (!navigator.geolocation) {
+        console.log('Geolocation not supported');
+        return;
+      }
 
-          try {
-            const { latitude, longitude } = position.coords;
-            // Use a reverse geocoding service to get location name
-            const response = await fetch(
-              `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-            );
-            const data = await response.json();
-            const city = data.city || data.locality || 'your location';
-            const country = data.countryName || '';
-            if (mounted) {
-              setLocation(`${city}${country ? `, ${country}` : ''}`);
-            }
-          } catch (error) {
-            console.error('Failed to get location:', error);
-            // Location already defaults to 'your location'
+      try {
+        // Check if we already have permission
+        if (navigator.permissions) {
+          const permission = await navigator.permissions.query({ name: 'geolocation' });
+          if (permission.state === 'denied') {
+            console.log('Geolocation permission denied');
+            return;
           }
-        },
-        (error) => {
-          console.error('Geolocation error:', error);
-          // Location already defaults to 'your location'
         }
-      );
-    }
+
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            if (!mounted) return;
+
+            try {
+              const { latitude, longitude } = position.coords;
+              // Use a reverse geocoding service to get location name
+              const response = await fetch(
+                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+              );
+
+              if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+              }
+
+              const data = await response.json();
+              const city = data.city || data.locality || 'your location';
+              const country = data.countryName || '';
+              if (mounted) {
+                setLocation(`${city}${country ? `, ${country}` : ''}`);
+              }
+            } catch {
+              console.log('Failed to get location name, using coordinates');
+              if (mounted) {
+                setLocation(`${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}`);
+              }
+            }
+          },
+          (error: GeolocationPositionError) => {
+            console.log('Geolocation not available:', error.code, error.message);
+            // Keep default location
+          },
+          {
+            enableHighAccuracy: false,
+            timeout: 10000,
+            maximumAge: 300000 // 5 minutes
+          }
+        );
+      } catch (error) {
+        console.log('Geolocation setup error:', error);
+      }
+    };
+
+    getLocation();
 
     // Auto-hide after 5 seconds
     const timer = setTimeout(() => {
