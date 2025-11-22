@@ -25,7 +25,7 @@ export default function UserDashboard() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState(''); // for future use
+  // const [currentPassword, setCurrentPassword] = useState(''); // reserved for future features
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -145,16 +145,14 @@ export default function UserDashboard() {
 
         setMessage('Password updated successfully!');
         setMessageType('success');
-        setShowPasswordModal(false);
-        setCurrentPassword('');
+  setShowPasswordModal(false);
         setNewPassword('');
         setConfirmPassword('');
       } else {
         // For SQLite/demo mode, just show success
         setMessage('Password updated successfully!');
         setMessageType('success');
-        setShowPasswordModal(false);
-        setCurrentPassword('');
+  setShowPasswordModal(false);
         setNewPassword('');
         setConfirmPassword('');
       }
@@ -498,7 +496,17 @@ export default function UserDashboard() {
                   className="hidden"
                 />
                 <p className="text-slate-400 text-sm mt-2">
-                  {uploading ? 'Processing image...' : 'Click the upload icon to change your profile picture'}
+                  {uploading ? (
+                    'Processing image...'
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-blue-accent hover:text-blue-bright underline text-sm"
+                    >
+                      Click here or the upload icon to change your profile picture
+                    </button>
+                  )}
                 </p>
               </div>
               <div className="flex gap-3">
