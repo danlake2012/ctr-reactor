@@ -21,6 +21,8 @@ export default function UserDashboard() {
   const [loading, setLoading] = useState(true);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
@@ -92,7 +94,7 @@ export default function UserDashboard() {
       const reader = new FileReader();
       reader.onload = (e) => {
         setProfileImage(e.target?.result as string);
-        setMessage('Profile image updated successfully!');
+        setMessage('Profile image uploaded successfully!');
         setMessageType('success');
         setTimeout(() => setMessage(''), 3000);
       };
@@ -287,10 +289,16 @@ export default function UserDashboard() {
               >
                 Update Profile
               </button>
-              <button className="w-full bg-blue-primary/20 hover:bg-blue-primary/30 text-blue-accent py-2 px-4 rounded-lg transition-colors text-left">
+              <button 
+                onClick={() => setShowNotificationsModal(true)}
+                className="w-full bg-blue-primary/20 hover:bg-blue-primary/30 text-blue-accent py-2 px-4 rounded-lg transition-colors text-left"
+              >
                 Notification Settings
               </button>
-              <button className="w-full bg-red-600/20 hover:bg-red-600/30 text-red-400 py-2 px-4 rounded-lg transition-colors text-left">
+              <button 
+                onClick={() => setShowDeleteModal(true)}
+                className="w-full bg-red-600/20 hover:bg-red-600/30 text-red-400 py-2 px-4 rounded-lg transition-colors text-left"
+              >
                 Delete Account
               </button>
             </div>
@@ -469,7 +477,7 @@ export default function UserDashboard() {
                   className="hidden"
                 />
                 <p className="text-slate-400 text-sm mt-2">
-                  {uploading ? 'Uploading...' : 'Click to upload profile picture'}
+                  {uploading ? 'Processing image...' : 'Click the upload icon to change your profile picture'}
                 </p>
               </div>
               <div className="flex gap-3">
@@ -480,10 +488,94 @@ export default function UserDashboard() {
                   Cancel
                 </button>
                 <button
-                  onClick={() => setShowProfileModal(false)}
+                  onClick={() => {
+                    setMessage('Profile updated successfully!');
+                    setMessageType('success');
+                    setShowProfileModal(false);
+                    setTimeout(() => setMessage(''), 3000);
+                  }}
                   className="flex-1 bg-blue-accent hover:bg-blue-bright text-black font-bold py-2 px-4 rounded-lg transition-colors"
                 >
                   Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Notifications Modal */}
+      {showNotificationsModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                Notification Settings
+              </h3>
+              <button
+                onClick={() => setShowNotificationsModal(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div className="text-center py-4">
+                <div className="text-4xl mb-4">🔔</div>
+                <p className="text-slate-300 mb-4">Notification settings coming soon!</p>
+                <p className="text-slate-400 text-sm">This feature is currently under development.</p>
+              </div>
+              <button
+                onClick={() => setShowNotificationsModal(false)}
+                className="w-full bg-blue-accent hover:bg-blue-bright text-black font-bold py-2 px-4 rounded-lg transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Account Modal */}
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-red-400" style={{ fontFamily: 'Orbitron, sans-serif' }}>
+                Delete Account
+              </h3>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div className="text-center">
+                <div className="text-4xl mb-4">⚠️</div>
+                <p className="text-red-300 font-medium mb-2">This action cannot be undone!</p>
+                <p className="text-slate-300 text-sm mb-4">
+                  Deleting your account will permanently remove all your data, settings, and access to our services.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="flex-1 bg-slate-600 hover:bg-slate-700 text-white py-2 px-4 rounded-lg transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setMessage('Account deletion is not available in demo mode');
+                    setMessageType('error');
+                    setShowDeleteModal(false);
+                    setTimeout(() => setMessage(''), 3000);
+                  }}
+                  className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                >
+                  Delete Account
                 </button>
               </div>
             </div>
