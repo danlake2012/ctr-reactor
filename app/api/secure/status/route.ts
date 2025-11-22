@@ -2,12 +2,20 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    console.debug('[app api] /api/secure/status called');
     const secretEnv = process.env.ADMIN_SECRET || process.env.NEXT_PUBLIC_ADMIN_SECRET || '';
     const allowed = secretEnv.split(',').map(s => s.trim()).filter(Boolean);
     const ipAllowlist = (process.env.ADMIN_IP_ALLOWLIST || '').split(',').map(s => s.trim()).filter(Boolean);
     const requireSupabase = (process.env.ADMIN_REQUIRE_SUPABASE_SESSION || '').toLowerCase() === 'true';
     const requirePassword = Boolean(process.env.ADMIN_PASSWORD);
+
+    console.debug('[app api] /api/secure/status called', {
+      secretSet: allowed.length > 0,
+      allowedCount: allowed.length,
+      ipAllowlistCount: ipAllowlist.length,
+      requireSupabase,
+      requirePassword,
+    });
+    
 
   return NextResponse.json({
       ok: true,
