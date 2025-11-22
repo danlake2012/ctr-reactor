@@ -17,3 +17,6 @@ Keep this value secret and rotate it when necessary.
 
 # ctr-reactor-v2
 # ctr-reactor
+
+<!-- Redeploy trigger: do not remove -->
+<!-- redeploy: 2025-11-22T18:45:00Z -->
