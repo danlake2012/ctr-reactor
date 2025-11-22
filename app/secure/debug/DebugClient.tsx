@@ -6,6 +6,8 @@ export default function DebugClient() {
   const [pingResult, setPingResult] = useState<Record<string, unknown> | null>(null);
   const [statusResult, setStatusResult] = useState<Record<string, unknown> | null>(null);
   const [diagResult, setDiagResult] = useState<Record<string, unknown> | null>(null);
+  const [existsResult, setExistsResult] = useState<Record<string, unknown> | null>(null);
+  const [deployInfo, setDeployInfo] = useState<Record<string, unknown> | null>(null);
   const [adminPass, setAdminPass] = useState('');
   const [error, setError] = useState<string | null>(null);
 
@@ -44,17 +46,34 @@ export default function DebugClient() {
     setDiagResult(res);
   }
 
+  async function fetchExists() {
+    const hdrs: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (adminPass) hdrs['x-admin-password'] = adminPass;
+    const res = await doFetch('/api/secure/admin-exists', { headers: hdrs });
+    setExistsResult(res);
+  }
+
+  async function fetchDeployInfo() {
+    const res = await doFetch('/api/deploy/info');
+    setDeployInfo(res);
+  }
+
   return (
     <div className="bg-slate-700 p-6 rounded-md text-slate-100">
-      <div className="flex gap-2 items-center mb-3">
+        <div className="flex gap-2 items-center mb-3">
         <button className="bg-green-500 hover:bg-green-600 px-3 py-1 rounded" onClick={fetchPing}>Fetch /api/secure/ping</button>
         <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded" onClick={fetchStatus}>Fetch /api/secure/status</button>
+          <button className="bg-indigo-500 hover:bg-indigo-600 px-3 py-1 rounded" onClick={fetchDeployInfo}>Fetch /api/deploy/info</button>
         <input className="ml-auto bg-slate-800 px-2 py-1 rounded" placeholder="Admin password (for diagnostics)" value={adminPass} onChange={(e) => setAdminPass(e.target.value)} />
       </div>
-      <div className="flex gap-2 items-center mb-3">
+        <div className="flex gap-2 items-center mb-3">
         <button className="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded" onClick={fetchDiag}>Post /api/secure/diagnostic</button>
         <div className="text-slate-300 ml-2 text-sm">(Diagnostic will require admin password in production)</div>
       </div>
+        <div className="flex gap-2 items-center mb-3">
+          <button className="bg-purple-500 hover:bg-purple-600 px-3 py-1 rounded" onClick={fetchExists}>Fetch /api/secure/admin-exists</button>
+          <div className="text-slate-300 ml-2 text-sm">(Requires admin password in production)</div>
+        </div>
 
       {error && <div className="text-red-400">Error: {error}</div>}
 
@@ -70,6 +89,14 @@ export default function DebugClient() {
         <div className="bg-slate-800 p-3 rounded">
           <div className="font-bold mb-2">Diagnostic</div>
           <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(diagResult, null, 2)}</pre>
+        </div>
+        <div className="bg-slate-800 p-3 rounded">
+          <div className="font-bold mb-2">Admin Exists</div>
+          <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(existsResult, null, 2)}</pre>
+        </div>
+        <div className="bg-slate-800 p-3 rounded">
+          <div className="font-bold mb-2">Deploy Info</div>
+          <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(deployInfo, null, 2)}</pre>
         </div>
       </div>
     </div>

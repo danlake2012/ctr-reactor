@@ -19,6 +19,7 @@ export default async function SecureAdminPage({ params }: PageProps) {
 
   // decode URI component as URL encoding may be used for special chars or spaces
   const keyParam = decodeURIComponent(params.key || '').trim();
+  console.debug('[secure] server route requested with params.key=', params.key, 'keyParam=', keyParam, 'allowedCount=', allowed.length);
 
   if (!allowed.includes(keyParam)) {
     // For security, return a 404 so the existence of admin page is hidden
