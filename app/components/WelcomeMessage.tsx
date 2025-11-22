@@ -7,8 +7,22 @@ interface WelcomeMessageProps {
   onClose: () => void;
 }
 
+const getUserName = (user: { email?: string; id?: string } | null): string => {
+  if (!user) return 'User';
+  
+  // Try to get name from user object, or extract from email
+  if (user.email) {
+    // Extract name from email (part before @)
+    const emailName = user.email.split('@')[0];
+    // Capitalize first letter
+    return emailName.charAt(0).toUpperCase() + emailName.slice(1);
+  }
+  
+  return 'User';
+};
+
 export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
-  const [location, setLocation] = useState<string>('your location');
+  const [location, setLocation] = useState<string>('Detecting location...');
   const [show, setShow] = useState(true);
 
   useEffect(() => {
@@ -18,6 +32,7 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
     const getLocation = async () => {
       if (!navigator.geolocation) {
         console.log('Geolocation not supported');
+        setLocation('Unknown location');
         return;
       }
 
@@ -25,16 +40,20 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
         // Check if we already have permission
         if (navigator.permissions) {
           const permission = await navigator.permissions.query({ name: 'geolocation' });
+          console.log('Geolocation permission state:', permission.state);
           if (permission.state === 'denied') {
             console.log('Geolocation permission denied');
+            setLocation('Location access denied');
             return;
           }
         }
 
+        console.log('Requesting geolocation...');
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             if (!mounted) return;
 
+            console.log('Got position:', position.coords);
             try {
               const { latitude, longitude } = position.coords;
               // Use a reverse geocoding service to get location name
@@ -47,21 +66,46 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
               }
 
               const data = await response.json();
-              const city = data.city || data.locality || 'your location';
-              const country = data.countryName || '';
-              if (mounted) {
-                setLocation(`${city}${country ? `, ${country}` : ''}`);
+              console.log('Geocoding response:', data);
+              const city = data.city || data.locality || data.localityInfo?.administrative?.[2]?.name;
+              const country = data.countryName || data.localityInfo?.administrative?.[0]?.name;
+              
+              let locationString = 'Unknown location';
+              if (city && country) {
+                locationString = `${city}, ${country}`;
+              } else if (city) {
+                locationString = city;
+              } else if (country) {
+                locationString = country;
               }
-            } catch {
-              console.log('Failed to get location name, using coordinates');
+              
+              if (mounted) {
+                setLocation(locationString);
+              }
+            } catch (error) {
+              console.log('Failed to get location name, using coordinates:', error);
               if (mounted) {
                 setLocation(`${position.coords.latitude.toFixed(2)}, ${position.coords.longitude.toFixed(2)}`);
               }
             }
           },
           (error: GeolocationPositionError) => {
-            console.log('Geolocation not available:', error.code, error.message);
-            // Keep default location
+            console.log('Geolocation error:', error.code, error.message);
+            let errorMessage = 'Location unavailable';
+            switch (error.code) {
+              case error.PERMISSION_DENIED:
+                errorMessage = 'Location access denied';
+                break;
+              case error.POSITION_UNAVAILABLE:
+                errorMessage = 'Location unavailable';
+                break;
+              case error.TIMEOUT:
+                errorMessage = 'Location request timeout';
+                break;
+            }
+            if (mounted) {
+              setLocation(errorMessage);
+            }
           },
           {
             enableHighAccuracy: false,
@@ -71,6 +115,7 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
         );
       } catch (error) {
         console.log('Geolocation setup error:', error);
+        setLocation('Location error');
       }
     };
 
@@ -99,7 +144,7 @@ export default function WelcomeMessage({ user, onClose }: WelcomeMessageProps) {
           <div className="text-2xl">👋</div>
           <div className="flex-1">
             <h3 className="text-white font-bold text-lg mb-1" style={{ fontFamily: 'Orbitron, sans-serif' }}>
-              Welcome back!
+              Welcome back, {getUserName(user)}!
             </h3>
             <p className="text-blue-100 text-sm mb-2">
               You&apos;re logging in from {location}

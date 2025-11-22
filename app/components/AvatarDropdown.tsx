@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 import { EMOJI_AVATARS, pickEmojiForKey } from '@/lib/emojiAvatars';
 
@@ -47,14 +48,26 @@ export default function AvatarDropdown({ modalOpen = false, seed }: { modalOpen?
           />
 
           {/* Menu */}
-          <div className="fixed right-8 top-20 w-64 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl py-3" style={{ zIndex: 10000 }}>
+          <div className="fixed right-8 top-20 w-80 h-80 bg-blue-panel/95 border border-blue-primary/40 rounded-lg shadow-xl overflow-hidden" style={{ zIndex: 10000 }}>
+            {/* Header with User Dashboard Link */}
+            <div className="px-4 py-3 border-b border-blue-primary/20">
+              <Link
+                href="/user"
+                className="block text-sm font-medium text-blue-accent hover:text-blue-bright transition-colors uppercase tracking-widest"
+                style={{ fontFamily: 'Orbitron, sans-serif' }}
+                onClick={() => setIsOpen(false)}
+              >
+                User Dashboard →
+              </Link>
+            </div>
+
             <div className="px-4 py-2 border-b border-blue-primary/20">
               <h3 className="text-sm font-medium text-blue-accent uppercase tracking-widest" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Choose Avatar
               </h3>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 p-3">
+            <div className="grid grid-cols-6 gap-1 p-3 h-48 overflow-y-auto">
               {EMOJI_AVATARS.map((avatar) => (
                 <button
                   key={avatar}
@@ -62,7 +75,7 @@ export default function AvatarDropdown({ modalOpen = false, seed }: { modalOpen?
                     setSelectedAvatar(avatar);
                     setIsOpen(false);
                   }}
-                  className={`text-2xl p-2 rounded-lg transition-all hover:bg-blue-primary/30 hover:scale-110 ${
+                  className={`text-xl p-2 rounded-lg transition-all hover:bg-blue-primary/30 hover:scale-110 ${
                     selectedAvatar === avatar
                       ? 'bg-blue-primary/20 ring-2 ring-blue-accent scale-110'
                       : 'hover:bg-blue-primary/20'
