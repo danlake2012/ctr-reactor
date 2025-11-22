@@ -62,16 +62,16 @@ export default function LoginModal({ isOpen, onClose, onLogin, onOpenForgot }: L
 
   const modalContent = (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center p-6"
-      style={{ zIndex: 2147483647 }}
+      className="modal-backdrop fixed inset-0 flex items-center justify-center p-6"
       onClick={() => {
         console.log('Backdrop clicked - closing modal');
         onClose();
       }}
     >
       <div
-        className="w-full max-w-md max-h-[90vh] overflow-auto rounded-xl p-6 relative shadow-2xl animate-in fade-in-0 zoom-in-95 duration-200"
-        style={{ zIndex: 2147483647, background: 'linear-gradient(180deg, rgba(8,18,32,0.98), rgba(4,10,18,0.95))', border: '1px solid rgba(56,120,255,0.12)' }}
+        className="modal-menu w-full max-w-md max-h-[90vh] overflow-auto rounded-xl p-6 relative shadow-2xl animate-in fade-in-0 zoom-in-95 duration-200"
+        // allow CSS var to handle z-index
+        style={{ background: 'linear-gradient(180deg, rgba(8,18,32,0.98), rgba(4,10,18,0.95))', border: '1px solid rgba(56,120,255,0.12)' }}
         onClick={(e) => {
           console.log('Modal content clicked - preventing close');
           e.stopPropagation();

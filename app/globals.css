@@ -40,6 +40,8 @@
   --foreground-rgba-18: rgba(14, 165, 233, 0.18);
   --blue-accent-12: rgba(37, 99, 235, 0.12);
   --modal-backdrop-opacity: 1.0;
+  --modal-backdrop-z: 9999999;
+  --modal-menu-z: 10000000;
 }
 
 /* Theme overrides */
@@ -335,4 +337,9 @@ body {
 /* Modal and Dropdown Utilities */
 .modal-backdrop {
   background-color: rgba(0, 0, 0, var(--modal-backdrop-opacity));
+  z-index: var(--modal-backdrop-z);
+}
+
+.modal-menu {
+  z-index: var(--modal-menu-z);
 }

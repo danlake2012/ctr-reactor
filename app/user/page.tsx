@@ -89,11 +89,19 @@ export default function UserDashboard() {
 
     setUploading(true);
     try {
-      // For now, we'll just create a data URL for preview
+      // For now, create an immediate URL for preview and also a DataURL
       // In a real app, you'd upload to a storage service like Supabase Storage
+      const objectUrl = URL.createObjectURL(file);
+      setProfileImage(objectUrl);
       const reader = new FileReader();
       reader.onload = (e) => {
-        setProfileImage(e.target?.result as string);
+        try {
+          // Prefer data URL for consistent cross-platform rendering
+          setProfileImage(e.target?.result as string);
+        } catch {
+          // Fallback to object URL if DataURL parsing fails
+          setProfileImage(objectUrl);
+        }
         setMessage('Profile image uploaded successfully!');
         setMessageType('success');
         setTimeout(() => setMessage(''), 3000);
@@ -377,8 +385,8 @@ export default function UserDashboard() {
 
       {/* Password Reset Modal */}
       {showPasswordModal && (
-        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center">
+          <div className="modal-menu bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Change Password
@@ -432,8 +440,8 @@ export default function UserDashboard() {
 
       {/* Profile Update Modal */}
       {showProfileModal && (
-        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center">
+          <div className="modal-menu bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Update Profile
@@ -506,8 +514,8 @@ export default function UserDashboard() {
 
       {/* Notifications Modal */}
       {showNotificationsModal && (
-        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center">
+          <div className="modal-menu bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-blue-accent" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Notification Settings
@@ -538,8 +546,8 @@ export default function UserDashboard() {
 
       {/* Delete Account Modal */}
       {showDeleteModal && (
-        <div className="modal-backdrop fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
+        <div className="modal-backdrop fixed inset-0 flex items-center justify-center">
+          <div className="modal-menu bg-blue-panel border border-blue-primary/40 rounded-xl p-6 w-full max-w-md mx-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-bold text-red-400" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                 Delete Account

@@ -133,8 +133,8 @@ export default function DomainSearchModal({ isOpen, onClose }: DomainSearchModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-      <div className="bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 border border-blue-500/20 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-hidden">
+    <div className="modal-backdrop fixed inset-0 backdrop-blur-md flex items-center justify-center p-4">
+  <div className="modal-menu bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 border border-blue-500/20 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-hidden">
         {/* Header */}
         <div className="relative bg-linear-to-r from-blue-600/20 via-purple-600/20 to-cyan-600/20 border-b border-blue-500/20 p-6">
           <div className="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 animate-pulse"></div>

@@ -42,7 +42,7 @@ export default function ForgotPasswordModal({ isOpen, onClose, onSubmit }: Forgo
   if (!isOpen) return null;
 
   const content = (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-6" style={{ zIndex: 2147483646 }} onClick={onClose}>
+    <div className="modal-backdrop fixed inset-0 flex items-center justify-center p-6" onClick={onClose}>
       <div className="w-full max-w-md rounded-xl p-6 relative shadow-2xl" style={{ background: 'linear-gradient(180deg, rgba(6,12,24,0.98), rgba(8,14,26,0.95))', border: '1px solid rgba(56,120,255,0.08)' }} onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white"><X size={20} /></button>
 
