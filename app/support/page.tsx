@@ -156,7 +156,7 @@ export default function Support() {
                     </label>
                     <input
                       type="email"
-                      id="email"
+                      id="support-email"
                       name="email"
                       required
                       value={formData.email}
