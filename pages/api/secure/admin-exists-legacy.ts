@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { hasSupabase, supabase } from '@/lib/supabaseClient';
-import * as sqlite from '@/lib/sqlite';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') return res.status(405).json({ ok: false, error: 'Method not allowed' });
@@ -16,8 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const adminEmail = (process.env.ADMIN_EMAIL || '').trim();
     const configured = Boolean(adminEmail);
-    let exists = false;
-    let backend: 'supabase' | 'sqlite' | 'none' = 'none';
+  let exists = false;
+  let backend: 'supabase' | 'sqlite' | 'none' = 'none';
 
     if (!configured) return res.status(200).json({ ok: true, configured: false, exists: false, backend });
 
@@ -33,17 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
 
-    if (!exists) {
-      try {
-        const found = sqlite.findUserByEmail(adminEmail);
-        if (found) {
-          exists = true;
-          backend = 'sqlite';
-        }
-      } catch (err) {
-        console.warn('SQLite admin check error (pages)', err);
-      }
-    }
+    // If supabase isn't available or didn't find it, we can't reliably check sqlite here
+    // in a pages route environment because the native `better-sqlite3` polyfill may not
+    // be available during build. Return backend 'none' in that case.
 
     return res.status(200).json({ ok: true, configured, exists, backend });
   } catch (err) {
