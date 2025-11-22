@@ -6,17 +6,23 @@ interface PageProps {
 }
 
 export default function SecureAdminPage({ params }: PageProps) {
-  const secret = process.env.ADMIN_SECRET || process.env.NEXT_PUBLIC_ADMIN_SECRET;
+  // Allow multiple comma-separated secrets for convenience.
+  const secretEnv = process.env.ADMIN_SECRET || process.env.NEXT_PUBLIC_ADMIN_SECRET || '';
+  const allowed = secretEnv.split(',').map(s => s.trim()).filter(Boolean);
 
   // If no secret configured, deny access
-  if (!secret) {
+  if (allowed.length === 0) {
     notFound();
   }
 
-  if (params.key !== secret) {
+  // decode URI component as URL encoding may be used for special chars or spaces
+  const keyParam = decodeURIComponent(params.key || '').trim();
+
+  if (!allowed.includes(keyParam)) {
+    // For security, return a 404 so the existence of admin page is hidden
     notFound();
   }
 
-  // key matched, render the admin panel here so we avoid using '/admin'
+  // key matched, render the admin panel here
   return <Admin />;
 }
