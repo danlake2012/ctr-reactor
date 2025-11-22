@@ -281,7 +281,7 @@ export default function UserDashboard() {
                   onClick={() => {
                     // Open the profile modal and then open the file picker after it mounts
                     setShowProfileModal(true);
-                    setTimeout(() => fileInputRef.current?.click(), 150);
+                    setTimeout(() => fileInputRef.current?.click(), 250);
                   }}
                   className="inline-flex items-center gap-2 border border-blue-primary/30 bg-blue-primary/10 hover:bg-blue-primary/20 text-blue-accent px-3 py-2 rounded-full text-sm transition-colors"
                 >
