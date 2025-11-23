@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Trash2, Eye, Star } from 'lucide-react';
 
 interface Blog {
@@ -97,10 +98,12 @@ export default function BlogManager() {
               <div className="flex gap-4">
                 {/* Thumbnail */}
                 {blog.image_url && (
-                  <img
+                  <Image
                     src={blog.image_url}
                     alt={blog.title}
-                    className="w-32 h-20 object-cover rounded-lg flex-shrink-0"
+                    width={128}
+                    height={80}
+                    className="w-32 h-20 object-cover rounded-lg shrink-0"
                   />
                 )}
 
@@ -111,14 +114,14 @@ export default function BlogManager() {
                       <div className="flex items-center gap-2">
                         <h3 className="font-bold text-white text-sm truncate">{blog.title}</h3>
                         {blog.featured && (
-                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 flex-shrink-0" />
+                          <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 shrink-0" />
                         )}
                       </div>
                       <p className="text-xs text-slate-400 mt-1 line-clamp-2">{blog.excerpt}</p>
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-2 shrink-0">
                       <a
                         href={`/blog/${blog.slug}`}
                         target="_blank"

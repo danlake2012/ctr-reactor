@@ -89,7 +89,7 @@ Style: Professional stock photography, high-end business photography, ultra-real
           n: 1,
         });
 
-        const imageUrl = imageResponse.data[0]?.url || '';
+        const imageUrl = imageResponse.data?.[0]?.url || '';
 
         blogs.push({
           ...blogData,

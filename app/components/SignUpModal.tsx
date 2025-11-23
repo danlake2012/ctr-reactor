@@ -57,7 +57,7 @@ export default function SignUpModal({ isOpen, onClose, onSignup }: SignUpModalPr
     try {
       await signInWithOAuth(provider);
       // User will be redirected to OAuth provider
-    } catch (err) {
+    } catch {
       setError(`Failed to sign in with ${provider === 'google' ? 'Google' : 'Facebook'}`);
       setOAuthLoading(null);
     }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface Blog {
   title: string;
@@ -208,9 +209,11 @@ export default function BlogGenerator() {
             {generatedBlogs.map((blog, index) => (
               <div key={index} className="bg-blue-panel-dark border border-blue-primary/20 rounded-lg p-4">
                 {blog.imageUrl && (
-                  <img
+                  <Image
                     src={blog.imageUrl}
                     alt={blog.title}
+                    width={400}
+                    height={128}
                     className="w-full h-32 object-cover rounded-lg mb-3"
                   />
                 )}
