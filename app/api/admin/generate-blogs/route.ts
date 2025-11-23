@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI only when API key is available
+const getOpenAI = () => {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  return new OpenAI({ apiKey });
+};
 
 export async function POST(req: NextRequest) {
   try {
+    const openai = getOpenAI();
+    
+    if (!openai) {
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured. Please add OPENAI_API_KEY to your environment variables.' },
+        { status: 500 }
+      );
+    }
+
     // Check for admin authentication
     const adminPassword = process.env.ADMIN_PASSWORD || '';
     const providedPassword = req.headers.get('x-admin-password');
