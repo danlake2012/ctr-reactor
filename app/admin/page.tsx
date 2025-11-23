@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import BlogGenerator from './components/BlogGenerator';
+import BlogManager from './components/BlogManager';
 
 interface Message {
   id: string;
@@ -1029,31 +1031,14 @@ export default function Admin() {
 
             {/* Blog Generator Tab */}
             {activeTab === 'blog-generator' && (
-              <div className="mb-12">
+              <div className="mb-12 space-y-8">
                 <h2 className="text-2xl font-bold text-blue-accent mb-6 tracking-[0.2em] uppercase" style={{ fontFamily: 'Orbitron, sans-serif' }}>
                   AI BLOG GENERATOR
                 </h2>
-                <div className="bg-linear-to-br from-blue-panel-2/95 to-blue-panel/95 border border-blue-primary/40 rounded-3xl p-8 shadow-[0_0_25px_var(--blue-glow-25)] backdrop-blur-md">
-                  <div className="text-center py-12">
-                    <div className="text-6xl mb-4">📝</div>
-                    <h3 className="text-xl font-bold text-blue-accent mb-2" style={{ fontFamily: 'Orbitron, sans-serif' }}>AUTOMATED CONTENT CREATION</h3>
-                    <p className="text-slate-300 mb-6">Generate SEO-optimized blog posts and articles using AI</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                      <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-2 text-center">
-                        <div className="text-2xl font-bold text-purple-400 mb-2">47</div>
-                        <div className="text-sm text-slate-400">Posts Generated</div>
-                      </div>
-                      <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-2 text-center">
-                        <div className="text-2xl font-bold text-cyan-400 mb-2">8.5K</div>
-                        <div className="text-sm text-slate-400">Words Created</div>
-                      </div>
-                      <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-2 text-center">
-                        <div className="text-2xl font-bold text-green-400 mb-2">92%</div>
-                        <div className="text-sm text-slate-400">Quality Score</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
+                <BlogGenerator />
+                
+                <BlogManager />
               </div>
             )}
 
