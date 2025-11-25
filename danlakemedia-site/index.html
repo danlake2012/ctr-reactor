@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dan Lake Media — CTR Reactor</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8489515067750228" crossorigin="anonymous"></script>
+  <meta name="description" content="Dan Lake Media builds CTR Reactor, a tool that analyzes Google Ads performance metrics (impressions, clicks, cost, CTR) to provide optimization insights for authorized accounts.">
+  <style>
+    :root { --bg:#0b1220; --card:#111a2b; --text:#e7eefc; --muted:#a9b7d9; --accent:#6be3ff; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background:linear-gradient(180deg, #0b1220 0%, #0f1830 100%); color:var(--text); }
+    .container { max-width:980px; margin:0 auto; padding:48px 24px; }
+    .hero { padding:36px; background:var(--card); border:1px solid #1f2b46; border-radius:16px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+    h1 { margin:0 0 12px; font-size:28px; letter-spacing:0.2px; }
+    p { color:var(--muted); line-height:1.6; margin: 10px 0; }
+    .grid { display:grid; grid-template-columns:1fr; gap:18px; margin-top:24px; }
+    @media (min-width: 820px) { .grid { grid-template-columns: 1fr 1fr; } }
+    .card { background:#0d1628; border:1px solid #1f2b46; border-radius:12px; padding:18px; }
+    .card h2 { margin:0 0 8px; font-size:20px; }
+    .badge { display:inline-block; padding:6px 10px; border-radius:999px; background:#0e2038; color:#a9d7ff; border:1px solid #1f3a5c; font-size:12px; }
+    .footer { margin-top:36px; padding-top:18px; border-top:1px solid #1f2b46; font-size:14px; color:var(--muted); }
+    a { color:var(--accent); text-decoration:none; }
+    .modal { display: flex; }
+    .result-item { margin: 10px 0; padding: 10px; border: 1px solid #1f2b46; border-radius: 8px; background: #0d1628; }
+    .result-item a { display: block; color: var(--accent); text-decoration: none; }
+    .premium-badge { color: #ffd700; font-weight: bold; }
+  </style>
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <span class="badge">Dan Lake Media</span>
+      <h1>CTR Reactor — Campaign Performance Insights</h1>
+      <!-- Example AdSense test ad (data-adtest="on") - safe for verification testing -->
+      <div style="margin:18px 0; text-align:center;">
+        <ins class="adsbygoogle"
+          style="display:block; max-width:728px; margin:0 auto;"
+          data-ad-client="ca-pub-8489515067750228"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+          data-adtest="on"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
+      <p>CTR Reactor helps advertisers understand engagement and click‑through trends by analyzing Google Ads performance metrics (impressions, clicks, cost, CTR) to generate optimization suggestions. Access is limited to authorized Google Ads accounts; data is never resold.</p>
+      <div class="grid">
+        <div class="card">
+          <h2>Use of Google Ads API</h2>
+          <p>CTR Reactor retrieves aggregate campaign statistics from the Google Ads API for the account owner’s authorized properties. We use these metrics to power internal dashboards and optimization recommendations. No third‑party data sharing.</p>
+          <p><strong>Scopes & data:</strong> ad performance metrics (e.g., impressions, clicks, cost, CTR). Tokens are stored securely server‑side.</p>
+        </div>
+        <div class="card">
+          <h2>Privacy & Data Use</h2>
+          <p>We only access data for accounts that explicitly grant consent via OAuth. Data is used for reporting and optimization within CTR Reactor and is not sold or transferred. Users may revoke access at any time.</p>
+          <p>Contact us for data inquiries or revocation.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h2>Contact</h2>
+          <p>Email: <a href="mailto:danlake2012@gmail.com">danlake2012@gmail.com</a></p>
+          <p>Product: CTR Reactor</p>
+        </div>
+        <div class="card">
+          <h2>Status</h2>
+          <p>CTR Reactor is currently in limited testing. Access requires authorization via Google OAuth. We aim to provide clear, privacy‑respecting analytics for small advertisers.</p>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card" onclick="openDomainModal()" style="cursor: pointer;">
+          <h2>Domain Search</h2>
+          <p>Check domain availability instantly with Name.com API. Find the perfect domain for your project.</p>
+          <span class="badge">Search Now</span>
+        </div>
+        <div class="card">
+          <h2>More Tools</h2>
+          <p>Explore additional SEO and marketing tools coming soon.</p>
+        </div>
+      </div>
+      <div class="footer">
+        <p>&copy; <span id="y"></span> Dan Lake Media. All rights reserved.</p>
+        <!-- Footer test ad -->
+        <div style="margin-top: 12px; text-align:center;">
+          <ins class="adsbygoogle"
+            style="display:block; max-width:468px; margin:0 auto;"
+            data-ad-client="ca-pub-8489515067750228"
+            data-ad-slot="0987654321"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+            data-adtest="on"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Domain Search Modal -->
+  <div id="domainModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="modal-content" style="background: var(--card); border: 1px solid #1f2b46; border-radius: 16px; padding: 24px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;">
+      <span class="close" onclick="closeDomainModal()" style="float: right; font-size: 28px; cursor: pointer; color: var(--text);">&times;</span>
+      <h2 style="margin-top: 0;">Domain Search</h2>
+      <form id="domainForm">
+        <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #1f2b46; border-radius: 8px; background: #0d1628; color: var(--text);">
+        <button type="submit" style="padding: 10px 20px; background: var(--accent); border: none; border-radius: 8px; color: #0b1220; cursor: pointer;">Search</button>
+      </form>
+      <div id="results" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+  <script>
+    function openDomainModal() {
+      document.getElementById('domainModal').style.display = 'flex';
+    }
+    function closeDomainModal() {
+      document.getElementById('domainModal').style.display = 'none';
+      document.getElementById('results').innerHTML = '';
+      document.getElementById('domainForm').reset();
+    }
+    document.getElementById('domainForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const domain = document.getElementById('domainInput').value.trim();
+      if (!domain) return;
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<p>Searching...</p>';
+      try {
+        const response = await fetch('/api/domain-search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ domain })
+        });
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          resultsDiv.innerHTML = data.results.map(mapItem).join('');
+        } else {
+          resultsDiv.innerHTML = '<p>No results found.</p>';
+        }
+      } catch (error) {
+        resultsDiv.innerHTML = '<p>Error searching domain.</p>';
+        console.error(error);
+      }
+    });
+    function mapItem(r) {
+      const price = r.price != null ? '$' + Number(r.price).toFixed(2) : '';
+      const premiumBadge = r.premium ? '<span class=\"premium-badge\">★ Premium</span>' : '';
+      const tokenId = r.token_id || r.tokenId || null;
+      const baseSearchUrl = 'https://www.name.com/domain/search/' + r.domain;
+      const purchaseUrl = r.purchase_url || (tokenId ? baseSearchUrl + '?token_id=' + encodeURIComponent(tokenId) : baseSearchUrl);
+      const takenUrl = r.taken_url || baseSearchUrl;
+      if (r.available) {
+        return '<div class=\"result-item\"><a href=\"' + purchaseUrl + '\" target=\"_blank\">' + r.domain + ' ' + price + ' ' + premiumBadge + ' (Available)</a></div>';
+      } else {
+        return '<div class=\"result-item\"><a href=\"' + takenUrl + '\" target=\"_blank\">' + r.domain + ' ' + price + ' ' + premiumBadge + ' (Taken)</a></div>';
+      }
+    }
+  </script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

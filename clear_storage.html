@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear CTR Reactor Storage</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8489515067750228" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Clear CTR Reactor Storage</h1>
+    <p>This will clear the localStorage and sessionStorage for the CTR Reactor app so you can see the pop-ups again.</p>
+    <button onclick="clearStorage()">Clear Storage & Open App</button>
+    
+    <script>
+        function clearStorage() {
+            // Clear storage in this window
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Open the main app in a new window
+            window.open('http://localhost:3000', '_blank');
+            
+            // Also try to clear storage in the new window (this might not work due to cross-origin)
+            setTimeout(() => {
+                try {
+                    const newWindow = window.open('', 'ctr-reactor');
+                    if (newWindow) {
+                        newWindow.localStorage.clear();
+                        newWindow.sessionStorage.clear();
+                        newWindow.location.href = 'http://localhost:3000';
+                    }
+                } catch (e) {
+                    console.log('Could not clear storage in new window');
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
